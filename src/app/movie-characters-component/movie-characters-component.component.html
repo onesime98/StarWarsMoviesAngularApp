@@ -1,0 +1,11 @@
+<p>Personnages d'un film</p><br/>
+
+<ul *ngFor="let movieCharacter of moviesCharactersDetails">
+  <li>{{movieCharacter.name}}</li>
+  <li>{{movieCharacter.birthYear}}</li>
+  <li>{{movieCharacter.gender | gender}}</li>
+  <li>{{movieCharacter.height}}</li>
+  <li>{{movieCharacter.hairColor}}</li>
+  <li>{{movieCharacter.eyeColor}}</li>
+
+</ul>
