@@ -13,6 +13,13 @@ export class GenderPipe implements PipeTransform {
       case 'female':
         return 'F';
         break;
+      case 'unknown':
+        return 'Unknown';
+        break;
+      case 'n/a':
+        return 'No gender';
+        break;
+      default: return value;
     }
   }
 

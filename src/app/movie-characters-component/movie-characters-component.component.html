@@ -1,11 +1,19 @@
 <p>Personnages d'un film</p><br/>
+<div class="row">
+  <div class="card-columns">
+    <div *ngFor="let movieCharacter of moviesCharactersDetails">
+      <div class="card">
+        <img src="http://www2.pictures.zimbio.com/mp/myHAvIm5THhx.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">{{movieCharacter.name}} </h5>
+          <p class="card-text">Gender : {{movieCharacter.gender | gender}} </p>
+          <p class="card-text">Birth Year : {{movieCharacter.birthYear}} </p>
+          <p class="card-text"><small class="text-muted">Height: {{movieCharacter.height}}</small></p>
+          <p class="card-text"><small class="text-muted">Hair color
+            : {{movieCharacter.hairColor}}</small></p>
+          <p class="card-text"><small class="text-muted"> Eye color: {{movieCharacter.eyeColor}}</small></p></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<ul *ngFor="let movieCharacter of moviesCharactersDetails">
-  <li>{{movieCharacter.name}}</li>
-  <li>{{movieCharacter.birthYear}}</li>
-  <li>{{movieCharacter.gender | gender}}</li>
-  <li>{{movieCharacter.height}}</li>
-  <li>{{movieCharacter.hairColor}}</li>
-  <li>{{movieCharacter.eyeColor}}</li>
-
-</ul>
