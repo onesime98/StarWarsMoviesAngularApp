@@ -10,7 +10,8 @@ export class MovieCharactersComponentComponent implements OnInit {
   @Input()
   moviesCharactersDetails: CharacterModel[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

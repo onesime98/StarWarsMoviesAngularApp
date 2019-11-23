@@ -1,28 +1,82 @@
-<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <div class="panel-title">Stars Wars Movies</div>
-    </div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Star Wars Movies App</a>
+  </div>
+</nav>
+<br>
+<br>
 
-    <div style="padding-top:30px" class="panel-body">
-      <div style="margin-bottom: 25px" class="input-group">
-        <select class="form-control" #selectvalue (change)="selectChange()">
-          <option *ngFor="let movie of moviesArray" [value]="movie.title">{{ movie.title }}</option>
-        </select>
-      </div>
-      <div style="margin-top:10px" class="form-group">
-        <!-- Button -->
-        <div class="col-sm-12 controls">
-          <button type="button" (click)="getMoviesDetails(selectvalue.value)" class="btn btn-info">Valider</button>
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <!-- Blog Entries Column -->
+    <div class="col-md-12">
+
+      <h1 class="my-4">Star Wars Movies App
+      </h1>
+      <div class="col-md-8" *ngIf="loading">
+        <div class="text-center">
+          <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-secondary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-success" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-light" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-dark" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
       </div>
 
-      <div style="margin-bottom: 25px" class="input-group" *ngIf="this.showDetails">
-        <app-movie-details-component [movieDetails]="movieDetail"></app-movie-details-component>
-        <app-movie-characters-component [moviesCharactersDetails]="moviesCharacters"></app-movie-characters-component>
+      <!-- Search Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Movie selection</h5>
+        <div class="card-body">
+          <div class="input-group">
+            <select class="form-control" #selectvalue (change)="selectChange()">
+              <option *ngFor="let movie of moviesArray" [value]="movie.title">{{ movie.title }}</option>
+            </select>&nbsp;&nbsp;&nbsp;
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button"
+                        (click)="getMoviesDetails(selectvalue.value)">Search</button>
+              </span>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
+  <!-- /.row -->
+
+  <div class="row" *ngIf="networkAvailable==false">
+    <p style="color:red;">Veuillez vérifier votre connexion internet !!!!</p>
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="margin-bottom: 25px" *ngIf="this.showDetails">
+      <app-movie-details-component [movieDetails]="movieDetail"></app-movie-details-component>
+    </div>
+  </div>
+
+</div>
+<!-- /.container -->
 
 
 

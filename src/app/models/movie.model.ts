@@ -1,5 +1,3 @@
-import {CharacterModel} from './character.model';
-
 export class MovieModel {
   title: string;
   episodeId: number;

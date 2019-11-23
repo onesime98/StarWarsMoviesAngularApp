@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MovieModel} from '../models/movie.model';
 import {HttpClient} from '@angular/common/http';
-import {CharacterModel} from '../models/character.model';
 
 @Component({
   selector: 'app-movie-select-component',
@@ -10,10 +9,11 @@ import {CharacterModel} from '../models/character.model';
 })
 export class MovieSelectComponentComponent implements OnInit {
   moviesArray: MovieModel[] = [];
-  moviesCharacters: CharacterModel[] = [];
   urlForFilms = 'https://swapi.co/api/films/';
   showDetails = false;
   movieDetail: MovieModel = new MovieModel();
+  loading = true;
+  networkAvailable;
 
   constructor(private readonly http: HttpClient) {
 
@@ -21,8 +21,7 @@ export class MovieSelectComponentComponent implements OnInit {
 
   ngOnInit() {
     this.getAllMovies();
-    // this.getAllCharactersByMovies();
-
+    this.networkAvailable = window.navigator.onLine;
   }
 
   getAllMovies() {
@@ -38,6 +37,7 @@ export class MovieSelectComponentComponent implements OnInit {
         movieLineModel.openingCrawl = resultMovieLine.opening_crawl;
         this.moviesArray.push(movieLineModel);
       });
+      this.loading = false;
 
     });
   }
@@ -46,42 +46,11 @@ export class MovieSelectComponentComponent implements OnInit {
     this.showDetails = true;
     this.moviesArray.filter(movie => movie.title === value).map(movieDetailsValue => {
       this.movieDetail = movieDetailsValue;
-      // retrieve all characters of movies
-      this.getAllCharactersByMovies(value);
     });
     return this.movieDetail;
-
-  }
-
-  getAllCharactersByMovies(movieTitle: string) {
-
-    this.http.get(this.urlForFilms).subscribe(movies => {
-      let results: any[];
-      results = movies['results'];
-      results.forEach(movie => {
-        if (movie['title'] === movieTitle) {
-          movie['characters'].map(characterRequest => {
-            this.http.get(characterRequest).subscribe(movieCharacterInfo => {
-              const movieCharacter: CharacterModel = new CharacterModel();
-              movieCharacter.name = movieCharacterInfo['name'];
-              movieCharacter.birthYear = movieCharacterInfo['birth_year'];
-              movieCharacter.eyeColor = movieCharacterInfo['eye_color'];
-              movieCharacter.hairColor = movieCharacterInfo['hair_color'];
-              movieCharacter.height = movieCharacterInfo['height'];
-              movieCharacter.gender = movieCharacterInfo['gender'];
-              // console.log(movieCharacter);
-              this.moviesCharacters.push(movieCharacter);
-            });
-            // console.log(characterRequest);
-          });
-        }
-      });
-    });
   }
 
   selectChange() {
     this.showDetails = false;
-    this.moviesCharacters = [];
-
   }
 }

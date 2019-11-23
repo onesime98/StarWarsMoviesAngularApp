@@ -1,5 +1,38 @@
-<p> {{movieDetails.episodeId}}</p>
-<p> {{movieDetails.title}}</p>
-<p> {{movieDetails.releaseDate}}</p>
-<p> {{movieDetails.producer}}</p>
-<p> {{movieDetails.openingCrawl}}</p>
+<div class="card mb-4">
+  <img class="card-img-top"
+       src="https://static.petitpaume.com/sites/default/files/styles/bg_article/public/visuel/image3_6.png?itok=o03t8chG"
+       alt="Card image cap">
+  <div class="card-body">
+    <h2 class="card-title">Episode : {{movieDetails.episodeId}}</h2>
+    <h2 class="card-title">Title : {{movieDetails.title}}</h2>
+    <h3>Overview<br></h3>
+    <p class="card-text">{{movieDetails.openingCrawl}}</p>
+
+    <button class="btn btn-info" type="button" (click)="getAllCharactersByMovies(movieDetails.title)">Read More &rarr;
+    </button>
+  </div>
+  <div class="card-footer text-muted">
+    <b>Producer</b>: {{movieDetails.producer}} <br>
+    <b>Release date</b>:
+    {{movieDetails.releaseDate}}
+  </div>
+</div>
+
+<div class="col-md-12" *ngIf="showCharacters">
+  <div id="loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="loading"></div>
+  </div>
+</div>
+<div class="col-md-12">
+  <app-movie-characters-component [moviesCharactersDetails]="moviesCharacters"></app-movie-characters-component>
+</div>
+
+
