@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MovieModel} from '../models/movie.model';
 import {HttpClient} from '@angular/common/http';
+import {map, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-select-component',
@@ -25,7 +26,20 @@ export class MovieSelectComponentComponent implements OnInit {
   }
 
   getAllMovies() {
-    this.http.get(this.urlForFilms).subscribe(movies => {
+    this.http.get<any>(this.urlForFilms).pipe(
+      map(response => response.results),
+      map(results => results.map(resultMovieLine => {
+        const movieLineModel: MovieModel = new MovieModel();
+        movieLineModel.title = resultMovieLine.title;
+        movieLineModel.episodeId = resultMovieLine.episode_id;
+        movieLineModel.releaseDate = resultMovieLine.release_date;
+        movieLineModel.producer = resultMovieLine.producer;
+        movieLineModel.openingCrawl = resultMovieLine.opening_crawl;
+        return movieLineModel;
+      })),
+      tap(() => this.loading = false)
+    ).subscribe(movies => this.moviesArray = movies);
+     /* .subscribe(movies => {
       let results: any[];
       results = movies['results'];
       results.map(resultMovieLine => {
@@ -39,7 +53,7 @@ export class MovieSelectComponentComponent implements OnInit {
       });
       this.loading = false;
 
-    });
+    });*/
   }
 
   getMoviesDetails(value: string): MovieModel {
